@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		 <link rel="stylesheet"
+	      href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	      	
+	</head>
+	
+	<!--弹窗应用，首先引入promptWindow.js,之后给某个按钮或连接一个class=get-pop，同时设置一个div的class=prompt_pop，这样可以弹窗，
+	如果取消，需要再div元素加一个button的class=cancle-pop即可，这样弹窗就封装好了。建议prompt-pop放在body下，不然渲染弹窗会有透明度(已解决)-->
+	<style>
+	body ,.external{
+			height: 100%;
+			width: 100%;
+			
+			overflow: hidden;
+		}
+		
+	      
+			
+		
+
+/*.text-area{
+	margin-top:40px;
+	width:90%;
+	resize:none;
+	outline:none;
+}
+.post-img:hover{
+	width:677px;
+	height:800px;
+}
+
+.reply-host{
+	color:	#FE0000;
+}
+.b-size{
+	font-size:16px;
+	 //line-height:19px; 
+}*/
+
+	</style>
+	<script>
+		
+	</script>
+	<body>
+		
+		<div class="external">
+			我们一起走过
+			<button class="get-pop">弹窗</button><a href="http://www.baidu.com">12</a>
+			
+			
+		</div>
+		<div class="prompt_pop">
+					<p style="visibility: hidden;"><span class="po_id-hid"></span><span class="toWho-hid"></span></p>
+					<span style="font-size:28px;font-weight:450">回复<span class="floor1"></span><span class="reply-host"></span>(限制500字)</span>
+				   <textarea class="text-area" rows="10" cols="90" maxlength="500" ></textarea><br><br>
+				 <a href="#" class="label label-warning b-size cancle-pop" >取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="visibility:hidden;color:red" class="re-re-pro">回复不为空</span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="label label-success b-size" onclick="goRep();return false;">回复</a>
+			</div>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/promptWindow.js" ></script>
+		<script>
+			$(function(){
+		
+			})
+			
+		</script>
+	</body>
+</html>

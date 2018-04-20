@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>测试建立函数的形式，以及调用</title>
+		<style>
+			
+		p{	color: #6bc1e5;
+             font-family: cursive;
+             font-weight: bold;
+             font-size: 40px;
+             font-family:"微软雅黑";
+          
+             }
+		</style>
+		<!-- jQuery (Bootstrap 插件需要引入) -->
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script>
+		
+			$("form").submit();
+			$(function(){
+				var a="1";
+				var b="124356";
+				//alert(a.length+","+b.length);
+				alert(test4);
+				 (function(arg) {alert(arg);}("wo"));//方式五：立即执行函数，只运行一次，
+				    test2();                             //不用担心这些临时变量会污染全局空间。它不仅避免了干扰，也使得内存在执行完后立即释放。
+
+})
+			//方式一：
+	    window.test1=function (){
+	    	//alert(11);test2();test3()
+	    url="div-pop.html"
+     window.open(url,"displayWindow",　　"width=400,height=350,toolbar=yes,status=yes,scrollbars=yes,resize=yes,menubar=no");	
+	    
+	    
+	    }
+	    //方式二
+	    test2=function(a){
+	    	alert(22);this.a='woshia';
+	    }
+	    //方式三
+	    function test3(){
+	    	alert(33);
+	    }
+	    	 //方式四
+	    var test4=new test3();
+	
+	   
+		</script>
+	</head>
+	<body>
+	<p>简单点</p>
+	<button onclick="test1()">按钮</button>
+	</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		 <link rel="stylesheet"
+	      href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<!--渲染的div，当然引用bootstrap-->
+		<div class="zz-paging">
+					<p id="pagP" class="pagP">
+						<a href="#" onclick="paging(1);return false;"><span class="glyphicon glyphicon-step-backward"></span>上一页</a>&nbsp;&nbsp;
+						<span>当前页:<span id="nowPage">${nowPage}</span></span>/<span id="allPage">${allCount }</span>
+						<span><input class="form-control" id="inPage" value="${inp}" style="width:50px;display:inline;" onkeyup="onlyNum(this)"  oninput="onlyNum(this)" /></span>
+						<a href="#" onclick="paging(2);return false;"><span class="glyphicon glyphicon-hand-left"></span>跳转</a>&nbsp;&nbsp;
+						<a href="#" onclick="paging(3);return false;"><span class="glyphicon glyphicon-step-forward"></span>下一页</a><span class="pageJump" style="color:red;"></span>
+					</p>
+		</div>
+		<div class="zz-table">
+			<table class="" id="my-table" style="margin:0 auto;">
+					<c:forEach items="${posts}" var="p" varStatus="ps">
+
+
+						
+						<tr>
+
+
+							<td><a href="goToPost?b_id=${p.block.id}&p_id=${p.postPage.id}&pageName=${p.postPage.pagename}&po_id=${p.id}&blockName=${p.block.blockname}"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;
+								<span class="wc-span2 ">帖子主题:</span> <span class="wc-span1-v wc-topic">${p.title }</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							
+							<td><span class="wc-span2 wc-table ">时间:</span> <span
+								class="wc-span2-v">${p.time }</span>
+							</td>
+							<td><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;
+								<span class="wc-span2 wc-author wc-table">作者:</span> <span class="wc-span1-v">${p.user.username }</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td>
+								<a href="goToPost?b_id=${p.block.id}&p_id=${p.postPage.id}&pageName=${p.postPage.pagename}&po_id=${p.id}&blockName=${p.block.blockname}">
+							   <button type="button" class="btn btn-default btn-lg btn-s1">
+							  		<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 查看
+							   </button>
+							   </a>
+
+							</td>
+						</tr>
+
+						
+
+						
+					</c:forEach>
+				</table>
+			
+		</div>
+		
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+			    //颜色渲染
+				function colorShowAll(){
+				//$("#a2").css("display","none");
+				var colors = new Array("#F7A95E", "#5CAE97", "#8DB1B6", "#E97C62");
+				var colors1=new Array("#FF5C05", "#FF00FE", "#61FE00");
+				var colors2=new Array("#FEEE53", "#FB699A", "#BFA656");
+				var colors3=new Array("#FF00FE", "#61FE00");
+				var colors4 = new Array("#F7A95E", "#5CAE97", "#8DB1B6", "#E97C62","#FF5C05", "#FF00FE", "#61FE00","#FEEE53", "#FB699A", "#BFA656");
+				var colors7 = new Array("#F7A95E", "#E10E0D", "#2553F6", "#00FF01","#FF5C05", "#FF00FE");
+				$(".color6").each(function(index) {
+						$(this).css("color", colors7[index % 6]);
+					})
+				$(".color4").each(function(index) {
+					$(this).css("border-top-color", colors[index % 4]);
+				})
+				$(".color3").each(function(index) {
+					$(this).css("color", colors2[index % 3]);
+				})
+				$(".color3a1").each(function(index) {
+					$(this).css("color", colors1[index % 3]);
+				})
+				$(".color2").each(function(index) {
+					$(this).css("color", colors3[index % 2]);
+				})
+				$(".color10").each(function(index) {
+					$(this).css("color", colors4[index % 10]);
+				})
+				}
+				
+				//字符串拼接得分页
+				function regexpPagingTheUserPost(p,userId){
+					var r=""
+					+"<a href='#' onclick='pagingTheUserPost(1,"+userId+");return false;'><span class='glyphicon glyphicon-step-backward'></span>上一页</a>&nbsp;&nbsp;"
+					+"<span>当前页:<span id='nowPage'>"+p.nowPage+"</span></span>/<span id='allPage'>"+p.allCount+"</span>"
+					+"<span><input class='form-control' id='inPage' value='"+p.inp+"' style='width:50px;display:inline;' onkeyup='onlyNum(this)'  oninput='onlyNum(this)' /></span>"
+					+"<a href='#' onclick='pagingTheUserPost(2,"+userId+");return false;'><span class='glyphicon glyphicon-hand-left'></span>跳转</a>"
+					+"&nbsp;&nbsp;<a href='#' onclick='pagingTheUserPost(3,"+userId+");return false;'><span class='glyphicon glyphicon-step-forward'></span>下一页</a><span class='pageJump' style='color:red;'></span>";
+					return r;	
+	    
+				}
+				
+				//字符串拼接table
+				function regexpTable(p){
+					var pingTable="<tr>"
+						    +"	<td><a href='goToPost?b_id="+ p.block.id +"&p_id="+ p.postPage.id +"&pageName=+"+p.postPage.pagename+"&po_id="+ p.id+"&blockName="+p.block.blockname+"'><span class='glyphicon glyphicon-arrow-right'></span>&nbsp;&nbsp;"
+						 +"	<span class='wc-span2 '>帖子主题:</span> <span class='wc-span1-v wc-topic'>"+ p.title  +"</span></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+								+"</td>"
+								+"<td><span class='wc-span2 wc-table'>时间:</span> <span"
+									+"class='wc-span2-v'>"+ p.time  +"</span>"
+								+"</td>"
+								+"<td><span class='glyphicon glyphicon-pencil'></span>&nbsp;&nbsp;"
+									+"<span class='wc-span2 wc-author wc-table'>作者:</span> <span class='wc-span1-v'>"+ p.user.username  +"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+								+"</td>"
+								+"<td>"
+									+"<a href='goToPost?b_id="+ p.block.id +"&p_id="+ p.postPage.id +"&pageName="+p.postPage.pagename+"&po_id="+ p.id+"&blockName="+ p.block.blockname +"'>"
+								  +" <button type='button' class='btn btn-default btn-lg btn-s1'>"
+								  	 +"<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span> 查看"
+								   +"</button>"
+								  +"</a>"
+								+"</td>"
+							+"</tr>"; 
+							return pingTable;
+				}
+				
+				//分页函数
+				function pagingTheUserPost(flag,userId){//alert(13);
+					var pingTableAll="<table  id='my-table' style='margin:0 auto'>";
+					var nowPage=$("#nowPage").html();
+					var inp=$("#inPage").val();
+					if(nowPage==""||nowPage=="0"){
+						nowPage="1";	
+					}
+					if(inp==""||inp=="0"){
+					  inp="1";
+					}
+					
+					
+					
+					if(flag==1){
+						
+						if(nowPage<=1){
+							
+						}else{
+							nowPage--;
+						}
+						
+					}
+					if(flag==2){
+						nowPage=$("#inPage").val();
+						//inp=$("#inPage").val();
+					}
+					if(flag==3){
+						
+						nowPage++;
+					}
+					$.ajax({
+						url:"${rootPath}/baseJsp/pagingTheUserPost",
+						data:"nowPage="+nowPage+"&inp="+inp+"&userId="+userId,
+						type:"get",
+						dataType:"json",
+						async:false,
+						success:function(data){//alert(33);
+							$(".paging-content").children().remove();
+							 $(".pagP").children().remove();
+						
+							$.each(data.posts,function(index,e){
+								  
+								  console.log(e.time);
+								  pingTableAll+=regexpTableMyFocus(e);
+							
+								});
+							 pingTableAll+="</table>";
+							 $(".pagP").html(regexpPagingMyFocus(data));
+							 $(".paging-content").html(pingTableAll);
+							 colorShow();
+								colorShowAll();
+								},
+							 error:function(){
+								 alert("error2");
+							 }
+								
+							}) 
+				
+					
+				}
+				
+				
+				//ajax请求数据并且渲染
+				function seeTheUser(userId){
+		        var pingTableAll="<table  id='zz-table' style='margin:0 auto'>";
+				$.ajax({
+							url:"seeTheUser?userId="+userId,
+							type:"get",
+							dataType:"json",
+							success:function(data){//alert(0);
+								$(".paging-content").children().remove();
+								 $(".pagP").children().remove();
+								if(data.msg==0){
+									alert("请先去登录！");
+									return;
+								}
+								
+							
+								$.each(data.posts,function(index,e){
+									  
+									  console.log(e.time);
+									  pingTableAll+=regexpTable(e);
+								
+									});
+								 pingTableAll+="</table>";
+								 $(".pagP").html(regexpPagingTheUserPost(data,userId));
+								 $(".paging-content").html(pingTableAll);
+								
+								colorShow();
+								colorShowAll();
+								styleTable();
+								
+								
+							},
+							error:function(){
+								alert("myPrise error");
+								window.location.href="${rootPath}/baseJsp/index.jsp";
+							}
+						})
+	}
+		</script>
+	</body>
+</html>
